@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+    <head>
+        <style>
+            .Button1 {width: 160px; height: 40px; font-size: 15px;}
+        </style>
+    </head>
+   <body>
+   
+      <h1>Aggregate Unique Data Tool</h1>
+      <form>
+        File Path: <input type="text" name="fname" id="pathid" style="width:260px">
+      </form>
+      <form>
+        Column Name: <input type="text" name="fcolumn" id="colnameid" style="width:224px">
+      </form>
+      <form>
+        Amount: <input type="text" name="famount" id="amountid" style="width:265px">
+      </form>
+      <br>
+      <button class="Button1" onclick="postDataHeader()">Headers</button>
+      <button class="Button1" onclick="postDataNoHeader()">No Headers</button>
+      
+   </form>
+      
+   </body>
+</html>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script> 
+
+<script>
+    function postDataHeader() {
+        path = document.getElementById("pathid").value;
+        colname = document.getElementById("colnameid").value;
+        amount = document.getElementById("amountid").value;
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5000/ag_header",
+            data: { 
+                folder_path: path,
+                column_name: colname,
+                ag_amount: amount
+                },
+            success: callbackFunc,
+            error: callbackFail
+        });
+    }
+
+    function postDataNoHeader(){
+        path = document.getElementById("pathid").value;
+        colname = document.getElementById("colnameid").value;
+        amount = document.getElementById("amountid").value;
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5000/ag_noheader",
+            data: { 
+                folder_path: path,
+                column_name: colname,
+                ag_amount: amount
+                },
+            success: callbackFunc,
+            error: callbackFail
+        });
+    }
+
+    function callbackFunc(msg, status, jqXHR) {
+        // do something with the response
+        alert(msg);
+    }
+
+    function callbackFail(xhr, status, error) {
+        var err = eval("(" + xhr.responseText + ")");
+        alert(err.Message);
+    }
+
+
+</script>
