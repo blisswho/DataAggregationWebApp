@@ -87,14 +87,6 @@ def getUniqueValuesNoHeader(folder_name, num, column_num):
     else:
         return("Operation Unsuccessful, only "+str(final_df.shape[0])+" values found.")
 
-def calculateNumbers(num1, num2):
-    return num1 + num2
-
-def getAbsolutePath():
-    path = os.getcwd()
-    return path
-
-
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -119,7 +111,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        return render_template('hello.html')
+        return render_template('main.html')
 
     @app.route('/ag_header', methods=['GET', 'POST'])
     def test():
@@ -131,7 +123,6 @@ def create_app(test_config=None):
     
     @app.route('/ag_noheader', methods=['GET', 'POST'])
     def test2():
-        print("happy!")
         path = request.form['folder_path']
         col_num = request.form['column_name']
         amount = request.form['ag_amount']
@@ -151,6 +142,9 @@ def create_app(test_config=None):
 
     #         return render_template('upload_success.html')
 
+    @app.route('/hello')
+    def hello():
+        return 'Hello, World!'
 
     return app
 
